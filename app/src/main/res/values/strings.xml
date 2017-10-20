@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SortApp</string>
+
+    //List
+
+    <string name="noList">NO HAY LISTA</string>
+</resources>
