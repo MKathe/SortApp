@@ -20,14 +20,6 @@ public interface SortDataSource {
         void onDataNotAvailable();
     }
 
-    interface GetElementsCallback {
-
-        void onElementsLoaded(ElementEntity elementEntity);
-
-        void onDataNotAvailable();
-    }
-
-
 
     void getELements(@NonNull LoadElementsCallback callback);
 

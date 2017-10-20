@@ -33,19 +33,6 @@ public class SessionManager {
         editor = preferences.edit();
     }
 
-    public void saveCountRed(int count){
-        editor.putInt(COUNT, count);
-    }
-    public void updateElement(ElementEntity elementEntity){
-        editor.putInt(COUNT, elementEntity.getCount());
-        editor.putString(TOUCH, elementEntity.getTouch());
-        editor.putString(COLOR, elementEntity.getColor());
-        editor.commit();
-    }
-
-    public void getDataElement(){
-
-    }
 
    /* public void setUser(UserEntity userEntity) {
         if (userEntity != null) {

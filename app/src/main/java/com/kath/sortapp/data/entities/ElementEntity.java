@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import com.kath.sortapp.data.local.sqlite.SortPersistanceContract;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by katherine on 14/10/17.
@@ -85,4 +88,18 @@ public class ElementEntity implements Serializable, Comparable<ElementEntity> {
         }
         return 0;
     }
+
+    public Date getDate(){
+        Date tempDate = null;
+        SimpleDateFormat parseDateFromServer= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            tempDate = parseDateFromServer.parse(getTouch());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return tempDate;
+
+    }
+
 }

@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.kath.sortapp.data.entities.ElementEntity;
 
 /**
  * Created by katherine on 15/10/17.
@@ -44,23 +43,6 @@ public class SortDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(SQL_CREATE_ENTRIES);
-        //mockData(sqLiteDatabase);
-
-    }
-
-    private void mockData(SQLiteDatabase db){
-
-        mockElement(db, new ElementEntity("1","ROJO",0,null ));
-        mockElement(db, new ElementEntity("2","AZUL",0,null ));
-        mockElement(db, new ElementEntity("3","VERDE",0,null ));
-
-    }
-
-    public long mockElement(SQLiteDatabase db, ElementEntity elementEntity) {
-        return db.insert(
-                SortPersistanceContract.SortEntry.TABLE_NAME,
-                null,
-                elementEntity.toContentValues());
     }
 
     @Override
@@ -70,36 +52,6 @@ public class SortDbHelper extends SQLiteOpenHelper {
 
         //Se crea la nueva versión de la tabla
         sqLiteDatabase.execSQL(SQL_CREATE_ENTRIES);
-    }
-
-    public long saveElement(ElementEntity elementEntity) {
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-
-        return sqLiteDatabase.insert(
-                SortPersistanceContract.SortEntry.TABLE_NAME,
-                null,
-                elementEntity.toContentValues());
-    }
-
-    public Cursor getAllElements() {
-        return getReadableDatabase()
-                .query(
-                        SortPersistanceContract.SortEntry.TABLE_NAME,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null);
-    }
-
-    public int updateElement(ElementEntity elementEntity, String elementId) {
-        return getWritableDatabase().update(
-                SortPersistanceContract.SortEntry.TABLE_NAME,
-                elementEntity.toContentValues(),
-                SortPersistanceContract.SortEntry._ID + " LIKE ?",
-                new String[]{elementId}
-        );
     }
 
 

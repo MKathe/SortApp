@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 /**
- *Base Actividad de la cual se va a exteder las otras actividades de la app
+ *Base Actividad de la cual se va a extender las otras actividades de la app
  */
 public abstract  class BaseActivity extends AppCompatActivity {
 

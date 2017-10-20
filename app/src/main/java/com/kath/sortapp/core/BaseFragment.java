@@ -11,7 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 
 
 /**
- * Created by manu on 14/06/16.
+ * Created by katherine on 14/06/16.
  */
 public abstract class BaseFragment extends Fragment {
 

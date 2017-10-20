@@ -9,10 +9,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.support.v4.util.Preconditions.checkNotNull;
 
 /**
- * Created by junior on 13/10/17.
+ * Created by katherine on 13/10/17.
  */
 
 public class SortRepository implements SortDataSource {
@@ -26,10 +25,7 @@ public class SortRepository implements SortDataSource {
      */
     Map<String, ElementEntity> mElements;
 
-    /**
-     * Marks the cache as invalid, to force an update the next time data is requested. This variable
-     * has package local visibility so it can be accessed from tests.
-     */
+
     boolean mCacheIsDirty = false;
 
     // Prevent direct instantiation.
@@ -37,11 +33,6 @@ public class SortRepository implements SortDataSource {
         this.mSortDataSource = sortDataSource;
     }
 
-    /**
-     * Returns the single instance of this class, creating it if necessary.
-     * @param //SortDataSource  the device storage data source
-     * @return the {@link SortRepository} instance
-     */
     public static SortRepository getInstance(SortDataSource sortDataSource) {
         if (INSTANCE == null) {
             INSTANCE = new SortRepository(sortDataSource);
@@ -49,21 +40,9 @@ public class SortRepository implements SortDataSource {
         return INSTANCE;
     }
 
-    /**
-     * Used to force  to create a new instance
-     * next time it's called.
-     */
     public static void destroyInstance() {
         INSTANCE = null;
     }
-
-    /**
-     * Gets tasks from cache, local data source (SQLite) or remote data source, whichever is
-     * available first.
-     * <p>
-     * Note: {@link com.kath.sortapp.data.local.SortDataSource.LoadElementsCallback#onDataNotAvailable()} is fired if all data sources fail to
-     * get the data.
-     */
 
 
     private void refreshCache(List<ElementEntity> elementEntities) {
@@ -80,8 +59,9 @@ public class SortRepository implements SortDataSource {
     private void ListELements(){
        ArrayList<ElementEntity> list = new ArrayList<>();
         list.add(new ElementEntity("1","ROJO",0,null));
-        list.add(new ElementEntity("2","AZUL",0,null ));
-        list.add(new ElementEntity("3","VERDE",0,null ));
+        list.add(new ElementEntity("2","AZUL",0,null));
+        list.add(new ElementEntity("3","VERDE",0,null));
+        //list.add(new ElementEntity("4","ROJO",0,null));
         for (ElementEntity elementEntity : list) {
             mSortDataSource.saveElement(elementEntity);
         }
@@ -102,12 +82,14 @@ public class SortRepository implements SortDataSource {
             public void onElementsLoaded(List<ElementEntity> elementEntities) {
 
                 refreshCache(elementEntities);
-                callback.onElementsLoaded(new ArrayList<>(mElements.values()));
+                callback.onElementsLoaded(elementEntities);
+                //callback.onElementsLoaded(new ArrayList<>(mElements.values()));
             }
 
             @Override
             public void onDataNotAvailable() {
                 ListELements();
+                callback.onDataNotAvailable();
             }
         });
         // Respond immediately with cache if available and not dirty

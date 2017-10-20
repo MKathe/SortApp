@@ -18,6 +18,8 @@ public interface SortContract {
 
         void clickElement(ElementEntity elementEntity);
 
+        void reloadList();
+
         boolean isActive();
 
 
@@ -27,12 +29,6 @@ public interface SortContract {
     interface Presenter extends BasePresenter {
 
         void LoadListElements(boolean type);
-
-        void saveElement(ElementEntity elementEntity);
-
-        void sortList(List<ElementEntity> list);
-
-        //void LoadOrSort(boolean type);
 
         void updateElement(String id, int count, String last_touch);
 

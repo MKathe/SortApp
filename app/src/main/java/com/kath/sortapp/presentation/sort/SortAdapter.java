@@ -57,7 +57,9 @@ public class SortAdapter extends RecyclerView.Adapter<SortAdapter.ViewHolder> im
         if (elementEntity == null) {
             return;
         }
-        holder.tv_text.setText(String.valueOf(elementEntity.getCount()));
+        String text = String.valueOf(elementEntity.getCount())+ " " + String.valueOf(elementEntity.getTouch());
+        holder.tv_text.setText(text);
+
         if (elementEntity.getColor().equals("ROJO")){
             holder.item_element.setBackgroundColor(context.getResources().getColor(R.color.red));
         }
@@ -72,11 +74,6 @@ public class SortAdapter extends RecyclerView.Adapter<SortAdapter.ViewHolder> im
 
     }
     public void setItems(List<ElementEntity> elementEntities) {
-        /*//this.list.clear();
-        if (elementEntity != null) {
-            this.list.add(elementEntity);
-        }
-        notifyDataSetChanged();*/
         list = elementEntities;
         notifyDataSetChanged();
 

@@ -40,13 +40,8 @@ public class SortFragment extends BaseFragment implements SortContract.View{
     private SortAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
-    //Entity
-    private int count;
-
-    private SortDbHelper mDbHelper;
 
     private boolean first_load = true;
-    private List<ElementEntity> last_list;
 
     public SortFragment() {
         // Requires empty public constructor
@@ -54,13 +49,13 @@ public class SortFragment extends BaseFragment implements SortContract.View{
     @Override
     public void onResume() {
         super.onResume();
+        mPresenter.LoadListElements(first_load);
 
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mPresenter.LoadListElements(first_load);
     }
 
     public static SortFragment newInstance() {
@@ -82,7 +77,6 @@ public class SortFragment extends BaseFragment implements SortContract.View{
         View root = inflater.inflate(R.layout.fragment_list, container, false);
         mRecyclerView = root.findViewById(R.id.rv_list);
         mLinearLayout = root.findViewById(R.id.noList);
-        mDbHelper = new SortDbHelper(getActivity());
         return root;
     }
 
@@ -115,6 +109,11 @@ public class SortFragment extends BaseFragment implements SortContract.View{
     }
 
     @Override
+    public void reloadList() {
+        mPresenter.LoadListElements(first_load);
+    }
+
+    @Override
     public boolean isActive() {
         return isAdded();
     }
@@ -122,8 +121,6 @@ public class SortFragment extends BaseFragment implements SortContract.View{
     public void updateElement(ElementEntity elementEntity ){
         String last_touch = getTouch();
         int newCount = getNewCount(elementEntity.getCount());
-        //Toast.makeText(getContext(), String.valueOf(elementEntity.getCount()+1), Toast.LENGTH_SHORT).show();
-        //int newCount = 0;
         mPresenter.updateElement(elementEntity.getId(), newCount,last_touch);
     }
 
