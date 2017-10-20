@@ -83,7 +83,7 @@ public class SortLocalDataSource implements SortDataSource {
         ContentValues values = new ContentValues();
         values.put(SortPersistanceContract.SortEntry.COLUMN_ID, elementEntity.getId());
         values.put(SortPersistanceContract.SortEntry.COLUMN_COLOR, elementEntity.getColor());
-        values.put(SortPersistanceContract.SortEntry.COLUMN_COUNT, elementEntity.getCount());
+        values.put(SortPersistanceContract.SortEntry.COLUMN_COUNT, 0);
         values.put(SortPersistanceContract.SortEntry.COLUMN_LAST_TOUCH, elementEntity.getTouch());
 
         db.insert(SortPersistanceContract.SortEntry.TABLE_NAME, null, values);

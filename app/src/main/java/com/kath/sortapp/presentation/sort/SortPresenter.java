@@ -54,8 +54,14 @@ public class SortPresenter implements SortContract.Presenter, ElementItem {
                 //Sort(elementEntities);
                 if (type){
                     //Collections.sort(elementEntities);
-                    mView.getElementsSuccessful(bubleSort(elementEntities));
-                    mSortRepository.refreshElements(bubleSort(elementEntities));
+                    if (validateList(elementEntities)){
+                        List<ElementEntity> sortList = bubleSort(elementEntities);
+                        refreshData(sortList);
+                    }else {
+                        mView.getElementsSuccessful(elementEntities);
+
+                    }
+
                 }else{
                     mView.getElementsSuccessful(elementEntities);
                 }
@@ -68,21 +74,23 @@ public class SortPresenter implements SortContract.Presenter, ElementItem {
         });
     }
 
-    public void sort(List<ElementEntity> list){
-       //List<ElementEntity> newList = null;
-        boolean found = false;
+    public boolean validateList(List<ElementEntity> list){
         for (int i = 0; i <list.size() ; i++) {
-            if (list.get(i).getCount()>3){
-                //newList.add(new ElementEntity(list.get(i).getId(),list.get(i).getColor(),list.get(i).getCount(),list.get(i).getTouch()));
-                found = true;
+
+            if (list.get(i).getCount()>=3){
+
+                return true;
             }
+
         }
-        if (found){
-            Collections.sort(list);
-            mView.getElementsSuccessful(list);
-        }else{
-            mView.getElementsSuccessful(list);
-        }
+        return false;
+    }
+
+
+    public void refreshData(List<ElementEntity> list){
+        mSortRepository.refreshElements(list);
+        LoadListElements(false);
+
     }
 
     public List<ElementEntity> bubleSort(List<ElementEntity> list){
@@ -103,7 +111,13 @@ public class SortPresenter implements SortContract.Presenter, ElementItem {
         }
         return list;
     }
+public void resetCount(List<ElementEntity> list){
 
+    for (int i = 0; i <list.size() ; i++) {
+        mSortRepository.updateElements(list.get(i).getId(), 0 , list.get(i).getTouch());
+    }
+
+}
     @Override
     public void saveElement(ElementEntity elementEntity) {
         save(elementEntity);
@@ -111,7 +125,6 @@ public class SortPresenter implements SortContract.Presenter, ElementItem {
 
     @Override
     public void sortList(List<ElementEntity> list) {
-        sort(list);
     }
 
     public void save(ElementEntity elementEntity){
